@@ -2,24 +2,35 @@ package io.techno.domain;
 
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank( message = "Project name is required")
 	private String projectName;
+	
+	@NotBlank( message = "Project Identifier is required")
+	@Size(min=4, max=5, message = "Please use 4 to 5 character")
+	@Column(updatable = false, unique = true)
 	private String projectIdentifier;
+	
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	private Date start_date;
+	
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	private Date end_date;
 	
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	private Date created_at;
+	
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	private Date updated_at;
 	
 	public Project() {
